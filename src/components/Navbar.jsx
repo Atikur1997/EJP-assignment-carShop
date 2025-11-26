@@ -28,7 +28,6 @@ export default function Navbar() {
       <Link href="/allproducts">All Products</Link>
       <Link href="/dashboard">Dashboard</Link>
       <Link href="/dashboard/manageproducts">Manage Products</Link>
-      <Link href="/dashboard/product-details">Product Details</Link>
     </>
   );
 

@@ -1,15 +1,25 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import Banner from "@/components/Banner"; // Reuse your banner
+import Banner from "@/components/Banner";
 
 export default function AllProductsPage() {
   const [cars, setCars] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
-    fetch("/api/cars")
-      .then((res) => res.json())
-      .then((data) => setCars(data)); // All cars
+    const fetchCars = async () => {
+      try {
+        const res = await fetch("/api/cars");
+        if (!res.ok) throw new Error("Failed to fetch cars");
+        const data = await res.json();
+        setCars(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchCars();
   }, []);
 
   return (
@@ -35,31 +45,37 @@ export default function AllProductsPage() {
               className="bg-gradient-to-br from-purple-100 via-pink-50 to-indigo-100 shadow-xl rounded-2xl overflow-hidden p-4"
             >
               <img
-                src={car.imageUrl}
-                alt={car.name}
+                src={car.imageUrl || "/placeholder.jpg"}
+                alt={car.name || "Car image"}
                 className="w-full h-48 object-cover rounded-lg mb-4 hover:scale-105 transition-transform duration-300"
               />
-              <h3 className="text-xl font-bold text-purple-700">{car.name}</h3>
+              <h3 className="text-xl font-bold text-purple-700">
+                {car.name || "Unknown Car"}
+              </h3>
               <p className="text-gray-800 font-semibold mb-2">
-                ${car.priceUSD.toLocaleString()}
+                ${car.priceUSD?.toLocaleString() || "N/A"}
               </p>
 
               {/* Available Colors */}
               <div className="flex gap-2 flex-wrap mb-4">
-                {car.availableColors.map((color) => (
-                  <span
-                    key={color}
-                    className="w-5 h-5 rounded-full border border-gray-400"
-                    style={{ backgroundColor: color.toLowerCase() }}
-                    title={color}
-                  ></span>
-                ))}
+                {car.availableColors?.length ? (
+                  car.availableColors.map((color) => (
+                    <span
+                      key={color}
+                      className="w-5 h-5 rounded-full border border-gray-400"
+                      style={{ backgroundColor: color.toLowerCase() }}
+                      title={color}
+                    ></span>
+                  ))
+                ) : (
+                  <p className="text-gray-400 text-sm">No colors available</p>
+                )}
               </div>
 
               {/* Show Details Button */}
               <button
                 onClick={() =>
-                  alert(`Redirect to details of ${car.name} (implement route)`)
+                  router.push(`/dashboard/productdetails/${car._id}`)
                 }
                 className="w-full bg-indigo-600 text-white py-2 rounded-lg shadow-lg hover:bg-indigo-700 transition-colors duration-300"
               >
