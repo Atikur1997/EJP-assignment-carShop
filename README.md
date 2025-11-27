@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# EJP Assignment
 
-## Getting Started
+A modern, dynamic car booking and management application built with **Next.js**, **Firebase**, and **Tailwind CSS**. This project allows users to browse cars, book them, manage their bookings, and authenticate using email/password or Google login. It also features a sleek, animated interface powered by **Framer Motion**.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- User authentication with **Firebase Auth** (Email/Password & Google Login)
+- Manage booked cars and calculate subtotal
+- View order summary for booked cars
+- Remove booked cars dynamically
+- Responsive UI with **DaisyUI** & **Tailwind CSS**
+- Smooth animations with **Framer Motion**
+- Client-side localStorage management for bookings
+- Modular and reusable React components
+- Fully dynamic page rendering with Next.js 16
+
+---
+
+## 🛠 Tech Stack
+
+- **Framework:** Next.js 16
+- **Styling:** Tailwind CSS, DaisyUI
+- **Authentication:** Firebase Auth
+- **Database (optional future support):** Firebase Firestore, MongoDB
+- **Animations:** Framer Motion
+- **Icons:** React Icons
+- **Other:** Swiper, Lenis (smooth scrolling)
+
+---
+
+## 📦 Installation
+
+1. Clone the repository:
 
 ```bash
+git clone https://github.com/your-username/ejp-assignment.git
+cd ejp-assignment
+
+# Install dependencies
+npm install
+
+# Create a .env file for Vite
+# This file will store your backend API URL and Firebase config
+NEXT_PUBLIC_FIREBASE_API_KEY=YOUR_API_KEY
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=YOUR_AUTH_DOMAIN
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=YOUR_PROJECT_ID
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=YOUR_STORAGE_BUCKET
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=YOUR_MESSAGING_SENDER_ID
+NEXT_PUBLIC_FIREBASE_APP_ID=YOUR_APP_ID
+
+
+# Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔐 Authentication
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Email & Password
+Google Login
+Firebase Authentication for secure login and registration
+Auth state persists across sessio
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📝 Future Improvements
 
-## Learn More
+Add Firestore/MongoDB integration to store bookings permanently
+Add admin panel for managing cars
+Add booking history page
+Add payment integration
+Improve animations and UX
 
-To learn more about Next.js, take a look at the following resources:
+## 📜 License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is MIT Licensed.
