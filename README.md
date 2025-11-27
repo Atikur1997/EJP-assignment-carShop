@@ -1,4 +1,4 @@
-# EJP Assignment
+# CarShop
 
 A modern, dynamic car booking and management application built with **Next.js**, **Firebase**, and **Tailwind CSS**. This project allows users to browse cars, book them, manage their bookings, and authenticate using email/password or Google login. It also features a sleek, animated interface powered by **Framer Motion**.
 
