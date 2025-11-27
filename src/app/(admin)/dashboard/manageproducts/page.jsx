@@ -6,18 +6,20 @@ export const dynamic = "force-dynamic";
 export default function ManageProducts() {
   const [bookedCars, setBookedCars] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
-  const [dates, setDates] = useState([]); // store booking dates
+  const [dates, setDates] = useState([]);
 
   useEffect(() => {
-    // Only runs on the client
-    const cars = JSON.parse(localStorage.getItem("bookedCars") || "[]");
-    setBookedCars(cars);
+    if (typeof window !== "undefined") {
+      // Only runs in the browser
+      const cars = JSON.parse(localStorage.getItem("bookedCars") || "[]");
+      setBookedCars(cars);
 
-    const total = cars.reduce((acc, car) => acc + (car.priceUSD || 0), 0);
-    setSubtotal(total);
+      const total = cars.reduce((acc, car) => acc + (car.priceUSD || 0), 0);
+      setSubtotal(total);
 
-    const today = new Date().toLocaleDateString();
-    setDates(cars.map(() => today)); // set today's date for all booked cars
+      const today = new Date().toLocaleDateString();
+      setDates(cars.map(() => today));
+    }
   }, []);
 
   const handleRemove = (id) => {
@@ -44,7 +46,7 @@ export default function ManageProducts() {
 
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar />
       <div className="flex gap-6">
         {/* Left Summary */}
         <div className="md:w-1/4 bg-white shadow-lg rounded-xl p-4 h-fit sticky top-6">

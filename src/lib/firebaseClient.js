@@ -1,5 +1,5 @@
+// src/lib/firebaseClient.js
 "use client";
-
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
@@ -13,21 +13,26 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Initialize once
-function createFirebaseApp() {
+export function getFirebaseApp() {
   if (!getApps().length) {
     return initializeApp(firebaseConfig);
+  } else {
+    return getApp();
   }
-  return getApp();
 }
 
-// 💡 Do not run Firebase code automatically on import
 export function getFirebaseAuth() {
-  const app = createFirebaseApp();
-  return getAuth(app);
+  if (typeof window !== "undefined") {
+    return getAuth(getFirebaseApp());
+  }
+  return null;
 }
 
 export function getFirebaseDB() {
-  const app = createFirebaseApp();
-  return getFirestore(app);
+  if (typeof window !== "undefined") {
+    return getFirestore(getFirebaseApp());
+  }
+  return null;
 }
+
+export default getFirebaseApp;
