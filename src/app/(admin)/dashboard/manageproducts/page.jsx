@@ -1,6 +1,7 @@
 "use client";
 import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
+export const dynamic = "force-dynamic";
 
 export default function ManageProducts() {
   const [bookedCars, setBookedCars] = useState([]);

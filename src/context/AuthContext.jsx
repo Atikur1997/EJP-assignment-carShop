@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth } from "@/lib/firebaseClient";
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -9,21 +8,25 @@ import {
   signOut,
 } from "firebase/auth";
 
+import { getFirebaseAuth } from "@/lib/firebaseClient"; // ✅ use getter
+
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const auth = getFirebaseAuth(); // ✅ only runs on client
+
   // Listen for auth changes
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      setUser(user || null);
+    const unsub = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser || null);
       setLoading(false);
     });
 
     return () => unsub();
-  }, []);
+  }, [auth]);
 
   // Auth functions
   const register = (email, password) =>

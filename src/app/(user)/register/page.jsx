@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
@@ -10,13 +11,14 @@ import {
   signInWithPopup,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "@/lib/firebaseClient";
+import { getFirebaseAuth } from "@/lib/firebaseClient";
 
 export default function RegisterPage() {
   const { register } = useAuth();
   const router = useRouter();
+  const auth = getFirebaseAuth();
 
-  const [name, setName] = useState(""); // New state for Name
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -36,11 +38,8 @@ export default function RegisterPage() {
     try {
       setLoading(true);
       const userCredential = await register(email, password);
-      // Update user display name
       if (userCredential.user) {
-        await updateProfile(userCredential.user, {
-          displayName: name,
-        });
+        await updateProfile(userCredential.user, { displayName: name });
       }
       router.push("/user");
     } catch (err) {
@@ -64,6 +63,7 @@ export default function RegisterPage() {
     }
   };
 
+  // Framer Motion variants
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
@@ -95,9 +95,9 @@ export default function RegisterPage() {
         </p>
       </motion.div>
 
-      {/* Registration Card */}
+      {/* Card */}
       <motion.div
-        className="card bg-gradient-to-br from-white/90 via-white/80 to-white/90 w-full max-w-md shadow-2xl rounded-xl border border-gray-200"
+        className="card bg-white/90 w-full max-w-md shadow-2xl rounded-xl border border-gray-200"
         variants={cardVariants}
         initial="hidden"
         animate="visible"
@@ -155,7 +155,7 @@ export default function RegisterPage() {
               />
               <button
                 type="button"
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 top-10"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
@@ -205,21 +205,22 @@ export default function RegisterPage() {
               disabled={loading}
               custom={4}
               variants={fieldVariants}
-              initial="hidden"
-              animate="visible"
             >
               Register
             </motion.button>
           </form>
 
-          {/* Google Login Button */}
+          {/* Google Login */}
           <motion.button
             onClick={handleGoogleLogin}
             className="btn btn-outline w-full flex items-center justify-center gap-2 mt-2 hover:bg-gray-100 transition-colors"
+            custom={5}
+            variants={fieldVariants}
           >
             <FcGoogle size={20} /> Continue with Google
           </motion.button>
 
+          {/* Login Link */}
           <motion.p
             className="mt-4 text-center text-sm text-gray-500"
             initial={{ opacity: 0 }}

@@ -1,5 +1,5 @@
-// src/lib/firebaseClient.js
 "use client";
+
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
@@ -13,20 +13,21 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-function initFirebase() {
-  try {
-    // Avoid re-init during HMR
-    if (!getApps().length) {
-      initializeApp(firebaseConfig);
-    } else {
-      getApp();
-    }
-  } catch (e) {
-    // ignore
+// Initialize once
+function createFirebaseApp() {
+  if (!getApps().length) {
+    return initializeApp(firebaseConfig);
   }
+  return getApp();
 }
 
-initFirebase();
+// 💡 Do not run Firebase code automatically on import
+export function getFirebaseAuth() {
+  const app = createFirebaseApp();
+  return getAuth(app);
+}
 
-export const auth = getAuth();
-export const db = getFirestore();
+export function getFirebaseDB() {
+  const app = createFirebaseApp();
+  return getFirestore(app);
+}
